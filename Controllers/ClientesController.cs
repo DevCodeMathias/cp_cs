@@ -2,6 +2,7 @@
 using checkpoint__10072025.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace checkpoint__10072025.Controllers
 {
@@ -11,7 +12,9 @@ namespace checkpoint__10072025.Controllers
         private readonly AppDbContext _db;
         public ClientesController(AppDbContext db) => _db = db;
 
-        public async Task<IActionResult> Index() => View(await _db.Clientes.AsNoTracking().ToListAsync());
+        public async Task<IActionResult> Index()
+    => View(await _db.Clientes.AsNoTracking().ToListAsync());
+
 
         public IActionResult Create() => View();
         [HttpPost]

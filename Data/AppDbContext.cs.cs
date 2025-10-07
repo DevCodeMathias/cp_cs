@@ -1,4 +1,5 @@
 ﻿using checkpoint__10072025.Models;
+using checkpoint__10072025.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,9 @@ namespace checkpoint__10072025.Data
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options) { }
+            : base(options)
+        {
+        }
 
         // DbSets obrigatórios da prova
         public DbSet<Cliente> Clientes => Set<Cliente>();
@@ -33,43 +36,57 @@ namespace checkpoint__10072025.Data
 
             // -------- Produto --------
             mb.Entity<Produto>()
-              .HasIndex(p => p.SKU).IsUnique();
+              .HasIndex(p => p.SKU)
+              .IsUnique();
 
             // exemplos de tipos que casam bem com Oracle
             mb.Entity<Produto>()
-              .Property(p => p.Nome).HasMaxLength(150);               // VARCHAR2(150)
+              .Property(p => p.Nome)
+              .HasMaxLength(150);               // VARCHAR2(150)
             mb.Entity<Produto>()
-              .Property(p => p.SKU).HasMaxLength(80);
+              .Property(p => p.SKU)
+              .HasMaxLength(80);
             mb.Entity<Produto>()
-              .Property(p => p.Preco).HasColumnType("NUMBER(12,2)");  // decimal
+              .Property(p => p.Preco)
+              .HasColumnType("NUMBER(12,2)");  // decimal
 
             // -------- Cliente --------
             mb.Entity<Cliente>()
-              .Property(c => c.Nome).HasMaxLength(120);
+              .Property(c => c.Nome)
+              .HasMaxLength(120);
             mb.Entity<Cliente>()
-              .Property(c => c.Email).HasMaxLength(120);
+              .Property(c => c.Email)
+              .HasMaxLength(120);
             mb.Entity<Cliente>()
-              .Property(c => c.Telefone).HasMaxLength(20);
+              .Property(c => c.Telefone)
+              .HasMaxLength(20);
 
             // -------- Imóvel --------
             mb.Entity<Imovel>()
-              .Property(i => i.Titulo).HasMaxLength(150);
+              .Property(i => i.Titulo)
+              .HasMaxLength(150);
             mb.Entity<Imovel>()
-              .Property(i => i.Endereco).HasMaxLength(200);
+              .Property(i => i.Endereco)
+              .HasMaxLength(200);
             mb.Entity<Imovel>()
-              .Property(i => i.Valor).HasColumnType("NUMBER(12,2)");
+              .Property(i => i.Valor)
+              .HasColumnType("NUMBER(12,2)");
 
             // -------- Contrato --------
             mb.Entity<Contrato>()
-              .Property(c => c.Inicio).HasColumnType("DATE");
+              .Property(c => c.Inicio)
+              .HasColumnType("DATE");
             mb.Entity<Contrato>()
-              .Property(c => c.Fim).HasColumnType("DATE");
+              .Property(c => c.Fim)
+              .HasColumnType("DATE");
 
             // -------- Visita --------
             mb.Entity<Visita>()
-              .Property(v => v.Inicio).HasColumnType("DATE");
+              .Property(v => v.Inicio)
+              .HasColumnType("DATE");
             mb.Entity<Visita>()
-              .Property(v => v.Fim).HasColumnType("DATE");
+              .Property(v => v.Fim)
+              .HasColumnType("DATE");
         }
 
         public override int SaveChanges()
@@ -100,14 +117,27 @@ namespace checkpoint__10072025.Data
                        v.Inicio < x.Fim && x.Inicio < v.Fim);
 
                 if (overlap)
+                {
                     throw new InvalidOperationException("Já existe visita nesse intervalo para este imóvel.");
+                }
             }
 
             // (2) Contrato ativo não pode ser editado (somente encerrado)
             var contratosEdit = ChangeTracker.Entries<Contrato>()
                 .Where(e => e.State == EntityState.Modified);
 
-            foreach (var e in contratosEdit)
+
+            foreach (var entry in contratosEdit)
             {
-                var originalAtivo = (bool)e.OriginalValues["Ativo"];
-                var novoAtivo = (bool)e.CurrentValues["Ativ]()
+                var originalAtivo = entry.OriginalValues.GetValue<bool>(nameof(Contrato.Ativo));
+                var novoAtivo = entry.CurrentValues.GetValue<bool>(nameof(Contrato.Ativo));
+
+                if (originalAtivo && novoAtivo)
+                {
+                    throw new InvalidOperationException(
+                        "Contratos ativos não podem ser editados. Encerre o contrato antes de alterar os dados.");
+                }
+            }
+        }
+    }
+}

@@ -1,3 +1,4 @@
+using checkpoint__10072025.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using System;
