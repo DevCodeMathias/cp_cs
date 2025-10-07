@@ -111,7 +111,6 @@ C:\Users\labsfiap\source\repos\checkpoint_ 10072025\checkpoint_ 10072025\obj\Deb
 C:\Users\labsfiap\source\repos\checkpoint_ 10072025\checkpoint_ 10072025\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\labsfiap\source\repos\checkpoint_ 10072025\checkpoint_ 10072025\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\labsfiap\source\repos\checkpoint_ 10072025\checkpoint_ 10072025\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\labsfiap\source\repos\checkpoint_ 10072025\checkpoint_ 10072025\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\labsfiap\source\repos\checkpoint_ 10072025\checkpoint_ 10072025\obj\Debug\net8.0\checkpoi.9FF6DF08.Up2Date
 C:\Users\labsfiap\source\repos\checkpoint_ 10072025\checkpoint_ 10072025\obj\Debug\net8.0\checkpoint_ 10072025.dll
 C:\Users\labsfiap\source\repos\checkpoint_ 10072025\checkpoint_ 10072025\obj\Debug\net8.0\refint\checkpoint_ 10072025.dll
